@@ -65,7 +65,7 @@ model.compile(optimizer=rmsprop,
               loss='categorical_crossentropy',
               metrics=['accuracy'])
 print('Training ------------')
-model.fit(inputArr, outputArr, batch_size=32)
+model.fit(inputArr, outputArr, epochs=50, batch_size=32)
 
 #test.csv
 ltest = []
