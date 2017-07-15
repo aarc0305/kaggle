@@ -53,7 +53,9 @@ print 'output shape: '+str(outputArr.shape)
 
 
 model = Sequential([
-    Dense(10, input_dim=7),
+    Dense(15, input_dim=7),
+    Activation('relu'),
+    Dense(10),
     Activation('relu'),
     Dense(2),
     Activation('softmax'),
@@ -111,9 +113,9 @@ for i in range(mtest):
 	inputTestArr[i,4]=int(ltest[i,4])/6.
 	inputTestArr[i,5]=float(ltest[i,5])/600.
 	inputTestArr[i,6]=float(ltest[i,6])
-print inputTestArr[0]
+#print inputTestArr[0]
 results = model.predict(inputTestArr)
-print results
+#print results
 print type(results)
 outputresult = []
 for result in results:
