@@ -116,7 +116,7 @@ for result in results:
 	for i in range(7):
 		if result[i] > max:
 			max = result[i]
-			index = i
+			index = i+1
 	outputresult.append(index)
 print outputresult
 with open ('result.csv', mode='w') as write_file:
