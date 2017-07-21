@@ -121,5 +121,6 @@ for result in results:
 print outputresult
 with open ('result.csv', mode='w') as write_file:
 	writer = csv.writer(write_file)
+	writer.writerow(["Id","Cover_Type"])
 	for i in range(len(outputresult)):
 		writer.writerow([i+15171,outputresult[i]])
