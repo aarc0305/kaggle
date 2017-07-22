@@ -4,7 +4,7 @@ from keras.datasets import mnist
 from keras.utils import np_utils
 from keras.models import Sequential
 from keras.layers import Dense, Activation
-from keras.optimizers import RMSprop
+from keras.optimizers import Adam
 import csv
 
 l=[]
@@ -61,13 +61,13 @@ model = Sequential([
     Activation('softmax'),
 ])
 
-rmsprop = RMSprop(lr=0.001, rho=0.9, epsilon=1e-08, decay=0.0)
+adam = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
 
-model.compile(optimizer=rmsprop,
+model.compile(optimizer=adam,
               loss='categorical_crossentropy',
               metrics=['accuracy'])
 print('Training ------------')
-model.fit(inputArr, outputArr, epochs=50, batch_size=32)
+model.fit(inputArr, outputArr, epochs=100, batch_size=32)
 
 #test.csv
 ltest = []
