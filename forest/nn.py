@@ -7,7 +7,7 @@ from keras.layers import Dense, Activation
 #from keras.optimizers import RMSprop
 from keras.optimizers import Adam
 import csv
-
+from keras.layers import Dropout
 l=[]
 with open('train.csv') as file:
 	lines = csv.reader(file)
@@ -57,7 +57,7 @@ for i in range(m):
 		inputArr[i,j+10] = int(l[i,j+10])
 print inputArr[0]
 print outputArr[0]
-
+'''
 model = Sequential([
     Dense(15, input_dim=54),
     Activation('relu'),
@@ -66,7 +66,16 @@ model = Sequential([
     Dense(7),
     Activation('softmax'),
 ])
-
+'''
+model = Sequential()
+model.add(Dense(output_dim=15,input_dim=54))
+model.add(Activation('relu'))
+model.add(Dropout(0.1))
+model.add(Dense(15))
+model.add(Activation('relu'))
+model.add(Dropout(0.1))
+model.add(Dense(7))
+model.add(Activation('softmax'))
 #rmsprop = RMSprop(lr=0.001, rho=0.9, epsilon=1e-08, decay=0.0)
 adam = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
 model.compile(optimizer=adam,
