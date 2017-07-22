@@ -6,7 +6,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Activation
 from keras.optimizers import Adam
 import csv
-
+from keras.layers import Dropout
 l=[]
 with open('train.csv') as file:
 	lines = csv.reader(file)
@@ -51,24 +51,35 @@ outputArr = np_utils.to_categorical(outputArr, num_classes=2)
 print 'input shape: '+str(inputArr.shape)
 print 'output shape: '+str(outputArr.shape)
 
-
+'''
 model = Sequential([
     Dense(15, input_dim=7),
-    Activation('relu'),
+    Activation('sigmoid'),
     Dense(10),
-    Activation('relu'),
+    Activation('sigmoid'),
+    Dense(10),
+    Activation('sigmoid'),	
     Dense(2),
     Activation('softmax'),
 ])
+'''
+model = Sequential()
+model.add(Dense(output_dim=15,input_dim=7))
+model.add(Activation('relu'))
+model.add(Dropout(0.1))
+model.add(Dense(15))
+model.add(Activation('relu'))
+model.add(Dropout(0.1))
+model.add(Dense(2))
+model.add(Activation('softmax'))
 
-adam = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
+adam = Adam(lr=0.05, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
 
 model.compile(optimizer=adam,
               loss='categorical_crossentropy',
               metrics=['accuracy'])
 print('Training ------------')
-model.fit(inputArr, outputArr, epochs=100, batch_size=32)
-
+model.fit(inputArr, outputArr, epochs=1000, batch_size=50)
 #test.csv
 ltest = []
 with open('test.csv') as file:
