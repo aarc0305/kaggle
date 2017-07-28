@@ -6,6 +6,7 @@ from keras.models import Sequential
 from keras.layers.core import Dense, Dropout, Activation, Flatten
 from keras.layers.embeddings import Embedding
 import numpy as np
+from keras.layers import LSTM
 lx=[]
 ly=[]
 with open('train.tsv') as file:
@@ -46,7 +47,8 @@ x_train = sequence.pad_sequences(x_train_seq, maxlen=50)
 model = Sequential()
 model.add(Embedding(output_dim=32,input_dim=2000,input_length=50))
 model.add(Dropout(0.2))
-model.add(Flatten())
+model.add(LSTM(128, dropout=0.2, recurrent_dropout=0.2))
+#model.add(Flatten())
 model.add(Dense(256,activation='relu'))
 model.add(Dropout(0.35))
 model.add(Dense(5,activation='sigmoid'))
