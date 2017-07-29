@@ -35,5 +35,35 @@ model.add(Dense(256,activation='relu'))
 model.add(Dropout(0.35))
 model.add(Dense(1,activation='sigmoid'))
 model.compile(loss='binary_crossentropy',optimizer='adam',metrics=['accuracy'])
-model.fit(X_train,y_train,batch_size=100,epochs=10)
+model.fit(X_train,y_train,batch_size=100,epochs=15)
+
+
+#test
+ltestx=[]
+with open('test.csv') as file:
+	lines = csv.reader(file)
+	count = 0
+	for line in lines:
+		if count == 0:
+			count = count+1
+			continue
+		ltestx.append(line[1])
+X_test = np.array(ltestx)
+
+X_test = token.texts_to_sequences(X_test)
+X_test = sequence.pad_sequences(X_test, maxlen=100)
 		
+predict = model.predict(X_test)
+print predict
+
+outputResult = []
+for predictItem in predict:
+	if predictItem[0] < 0.5:
+		outputResult.append(0)
+	else:
+		outputResult.append(1)
+with open ('result.csv', mode='w') as write_file:
+	writer = csv.writer(write_file)
+	writer.writerow(["ItemID","Sentiment"])
+	for i in range(len(outputResult)):
+		writer.writerow([i+1,outputResult[i]])
